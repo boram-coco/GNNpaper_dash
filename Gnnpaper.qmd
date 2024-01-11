@@ -52,7 +52,7 @@ import itables.interactive
 def cc_num_filter(selected_cc_num):
     return df50[df50['cc_num'] == selected_cc_num]
 opt.filters = {'cc_num': 'cc_num_filter'}
-itables.show(df50)
+itables.show(df50, options=opt)
 
 ```
 
