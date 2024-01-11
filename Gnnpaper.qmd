@@ -1,6 +1,6 @@
 ---
-title: "cc_num에 따른 사기 거래 탐지 그래프 시각화"
-author: "Kim Boram(coco)"
+title: "Graph representation corresponds to the credit card number"
+author: "Boram_coco"
 format: 
     dashboard:
      theme: default
@@ -33,8 +33,8 @@ df50 = pd.read_csv('~/Dropbox/GNNpaper_dash/data/df50_fraud.csv')
 #| title: cc_num별 거래 자료
 import itables
 import itables.options as opt
-df50_ccnum = df50.groupby("cc_num").agg(거래 수=('is_fraud', 'count'), 사기 거래 수=('is_fraud', 'sum'))
-itables.show(df50_ccnum)
+result_df = df50.groupby("cc_num")["is_fraud"].agg(거래수='count', 사기거래수='sum').reset_index()
+itables.show(result_df)
 ```
 
 
