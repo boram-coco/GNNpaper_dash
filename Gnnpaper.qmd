@@ -23,8 +23,7 @@ import plotly.express as px
 import networkx as nx
 import torch_geometric
 
-# data
-df50 = pd.read_csv('./data/'df50_fraud.csv')
+df50 = pd.read_csv('Dropbox/GNNpaper_dash/data/'df50_fraud.csv')
 
 ```
 
