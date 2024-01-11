@@ -31,10 +31,12 @@ result_df = df50.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index
 
 
 ```{python}
-#| title: cc_num별 거래 자료
-import itables
-import itables.options as opt
-itables.show(result_df)
+#| title: Data(Noraml:Fraud=5:5)
+from itables import init_notebook_mode
+init_notebook_mode(all_interactive=True)
+from itables.sample_dfs import get_countries
+from itables import show
+show(df50, lengthMenu=[10, 50, 100, 300, 600])
 ```
 
 
