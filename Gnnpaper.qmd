@@ -32,6 +32,7 @@ result_df = df50.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index
 
 ```{python}
 #| title: Data(Noraml:Fraud=5:5)
+import itables
 from itables import init_notebook_mode
 init_notebook_mode(all_interactive=True)
 from itables.sample_dfs import get_countries
