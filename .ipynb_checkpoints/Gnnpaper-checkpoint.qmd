@@ -1,0 +1,39 @@
+---
+title: "cc_num에 따른 사기 거래 탐지 그래프 시각화"
+author: "Kim Boram(coco)"
+format: 
+    dashboard:
+     theme: default
+     nav-buttons:
+      - icon: github
+        href: https://github.com/boram-coco
+execute: 
+  enabled: true
+  cache: false
+  freeze: false
+  error: true
+---
+
+```{python}
+import pandas as pd
+import dash
+from dash import dcc, html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import networkx as nx
+import torch_geometric
+
+# data
+df50 = pd.read_csv('./data/'df50_fraud.csv')
+
+```
+
+# 데이터 탐색 
+
+```{python}
+#| title: cc_num별 거래 자료
+import itables
+itabels.show(df50, showIndex=Fasle)
+```
+
+
