@@ -25,6 +25,7 @@ import torch_geometric
 
 # data
 df50 = pd.read_csv('~/Dropbox/GNNpaper_dash/data/df50_fraud.csv')
+result_df = df50.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index()
 
 ```
 
@@ -33,7 +34,6 @@ df50 = pd.read_csv('~/Dropbox/GNNpaper_dash/data/df50_fraud.csv')
 #| title: cc_num별 거래 자료
 import itables
 import itables.options as opt
-result_df = df50.groupby("cc_num")["is_fraud"].agg(거래수='count', 사기거래수='sum').reset_index()
 itables.show(result_df)
 ```
 
