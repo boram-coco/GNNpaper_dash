@@ -33,7 +33,7 @@ df50 = pd.read_csv('./data/'df50_fraud.csv')
 ```{python}
 #| title: cc_num별 거래 자료
 import itables
-itabels.show(df50, showIndex=Fasle)
+itables.show(df50, showIndex=Fasle)
 ```
 
 
