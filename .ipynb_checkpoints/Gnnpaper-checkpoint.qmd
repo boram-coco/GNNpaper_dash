@@ -25,19 +25,23 @@ import torch_geometric
 
 # data
 df50 = pd.read_csv('~/Dropbox/GNNpaper_dash/data/df50_fraud.csv')
+
 result_df = df50.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index()
+
 
 ```
 
 
+# Data {orientation="columns" scrolling="true"}
+
+## Row {.tabset}
+
+
+
 ```{python}
-#| title: Data(Noraml:Fraud=5:5)
+#| title: Data(cc_num's grouping)
 import itables
-from itables import init_notebook_mode
-init_notebook_mode(all_interactive=True)
-from itables.sample_dfs import get_countries
-from itables import show
-show(df50, lengthMenu=[10, 50, 100, 300, 600])
+itables.show(result_df, lengthMenu=[10, 50, 100, 300, 600])
 ```
 
 
