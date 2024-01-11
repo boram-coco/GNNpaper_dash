@@ -23,18 +23,15 @@ import plotly.express as px
 import networkx as nx
 import torch_geometric
 
-
-
 ```
 
-# 데이터 탐색 
 
 ```{python}
 #| title: cc_num별 거래 자료
 import itables
 import itables.options as opt
-df50 = pd.read_csv('Dropbox/GNNpaper_dash/data/'df50_fraud.csv')
-itables.show(df50, showIndex=Fasle)
+df50 = pd.read_csv('~/Dropbox/GNNpaper_dash/data/df50_fraud.csv')
+itables.show(df50)
 ```
 
 
