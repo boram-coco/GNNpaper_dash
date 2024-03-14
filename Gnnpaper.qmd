@@ -29,7 +29,7 @@ import itables
 with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
     fraudTrain = pickle.load(file)    
 
-
+merged_df = pd.read_csv('../GNNpaper/posts/results/240307_meged.csv')
 result_df = fraudTrain.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index()
 
 
@@ -62,19 +62,7 @@ itables.show(fraudTrain, options=opt)
 
 # Experiment
 
-## Row {.tabset}
-
 ```{python}
-#| title: proposed
-
-```
-
-```{python}
-#| title: pyod
-
-```
-
-```{python}
-#| title: Autogluon
-
+from itables import show
+show(merged_df, showIndex = False)
 ```
