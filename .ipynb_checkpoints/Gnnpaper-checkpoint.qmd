@@ -26,7 +26,7 @@ import pickle
 import itables
 
 # data
-with open('~/Dropbox/GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
+with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
     fraudTrain = pickle.load(file)    
 
 
@@ -60,9 +60,21 @@ itables.show(fraudTrain, options=opt)
 
 ```
 
-# Pyod
+# Experiment
 
 ## Row {.tabset}
 
 ```{python}
-#| title: 
+#| title: proposed
+
+```
+
+```{python}
+#| title: pyod
+
+```
+
+```{python}
+#| title: Autogluon
+
+```
