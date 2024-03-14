@@ -118,3 +118,16 @@ Ex1 = merged_df[(merged_df['throw_rate'] == 0.5) & (merged_df['train_size'] == 9
 from itables import show
 show(plot_auc_curve(Ex1), showIndex = False)
 ```
+
+
+```{python}
+#| title: Experiment2
+Ex2 = merged_df[(merged_df['test_frate'] >= 0.001) & (merged_df['test_frate'] <= 0.002) & (merged_df['train_size'] == 9009)]
+from itables import show
+show(Ex2, showIndex = False)
+```
+
+```{python}
+#| title: Experiment2 Visualization
+show(plot_auc_curve(Ex2), showIndex = False)
+```
