@@ -74,7 +74,7 @@ df_group_ccnum = pd.read_csv('./df_group_ccnum.csv')
 
 ```{python}
 #| title: Number of transactions per cc_num
-
+from itables import show
 itables.show(df_group_ccnum)
 ```
 
