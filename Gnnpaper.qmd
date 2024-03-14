@@ -129,5 +129,6 @@ show(Ex2, showIndex = False)
 
 ```{python}
 #| title: Experiment2 Visualization
+from itables import show
 show(plot_auc_curve(Ex2), showIndex = False)
 ```
