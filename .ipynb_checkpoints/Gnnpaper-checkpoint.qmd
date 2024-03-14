@@ -25,6 +25,36 @@ import torch_geometric
 import pickle
 import itables
 
+def plot_auc_curve(filtered_df):
+    # 모델 별 최대 AUC 값 구하기
+    max_auc_df = filtered_df.groupby('model')['auc'].max().reset_index()
+
+    # AUC 값 기준으로 데이터프레임 정렬 (가장 큰 값이 왼쪽에 오도록)
+    max_auc_df = max_auc_df.sort_values(by='auc', ascending=False)
+
+    # AUC 커브 그리기
+    fig = px.line(max_auc_df, x='model', y='auc', markers=True)
+    fig.update_traces(line=dict(width=2))  # 라인 굵기 설정
+    fig.update_layout(
+        title='AUC Curve for Models',
+        xaxis_title='Model',
+        yaxis_title='AUC',
+        xaxis=dict(tickangle=45),  # x축 라벨 회전
+        hovermode='closest',  # 마우스 호버시 가장 가까운 점 정보 표시
+    )
+
+    # 커서를 댔을 때 추가 정보 표시
+    def show_info(trace, points, selector):
+        model_name = max_auc_df.iloc[points.point_inds[0]]['model']
+        throw_rate = filtered_df[filtered_df['model'] == model_name]['throw_rate'].iloc[0]
+        train_frate = filtered_df[filtered_df['model'] == model_name]['train_frate'].iloc[0]
+        test_frate = filtered_df[filtered_df['model'] == model_name]['test_frate'].iloc[0]
+        fig.update_layout(title=f"AUC Curve for Models (Maximum AUC)<br>Model: {model_name}<br>Throw Rate: {throw_rate}<br>Train FRATE: {train_frate}<br>Test FRATE: {test_frate}")
+
+    fig.data[0].on_hover(show_info)
+
+    fig.show()
+
 # data
 with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
     fraudTrain = pickle.load(file)    
@@ -66,7 +96,25 @@ itables.show(fraudTrain, options=opt)
 
 # Experiment
 
+## Row {.tabset}
+
 ```{python}
+#| title: Experiment
 from itables import show
 show(merged_df, showIndex = False)
+```
+
+
+```{python}
+#| title: Experiment1
+Ex1 = merged_df[(merged_df['throw_rate'] == 0.5) & (merged_df['train_size'] == 9009)]
+from itables import show
+show(Ex1, showIndex = False)
+```
+
+```{python}
+#| title: Experiment1 Visualization
+Ex1 = merged_df[(merged_df['throw_rate'] == 0.5) & (merged_df['train_size'] == 9009)]
+from itables import show
+show(plot_auc_curve(Ex1), showIndex = False)
 ```
