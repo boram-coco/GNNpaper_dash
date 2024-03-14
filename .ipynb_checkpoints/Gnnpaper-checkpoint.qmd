@@ -22,11 +22,14 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import networkx as nx
 import torch_geometric
+import pickle
 
 # data
-df50 = pd.read_csv('~/Dropbox/GNNpaper_dash/data/df50_fraud.csv')
+with open('~/Dropbox/GNNpaper/fraudTrain.pkl', 'rb') as file:
+fraudTrain = pickle.load(file)    
 
-result_df = df50.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index()
+
+result_df = fraudTrain.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index()
 
 
 ```
