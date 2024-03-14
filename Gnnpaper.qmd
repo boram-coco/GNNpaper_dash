@@ -23,6 +23,7 @@ import plotly.express as px
 import networkx as nx
 import torch_geometric
 import pickle
+import itables
 
 # data
 with open('~/Dropbox/GNNpaper/fraudTrain.pkl', 'rb') as file:
@@ -43,7 +44,7 @@ result_df = fraudTrain.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset
 
 ```{python}
 #| title: Number of transactions per cc_num
-import itables
+
 itables.show(result_df, lengthMenu=[10, 50, 100, 300, 600])
 ```
 
