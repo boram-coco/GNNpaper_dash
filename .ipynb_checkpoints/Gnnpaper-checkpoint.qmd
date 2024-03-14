@@ -53,9 +53,9 @@ itables.show(result_df, lengthMenu=[10, 50, 100, 300, 600])
 import itables.options as opt
 import itables.interactive
 def cc_num_filter(selected_cc_num):
-    return df50[df50['cc_num'] == selected_cc_num]
+    return fraudTrain[fraudTrain['cc_num'] == selected_cc_num]
 opt.filters = {'cc_num': 'cc_num_filter'}
-itables.show(df50, options=opt)
+itables.show(fraudTrain, options=opt)
 
 ```
 
