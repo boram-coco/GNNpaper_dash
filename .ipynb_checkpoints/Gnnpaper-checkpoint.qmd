@@ -68,27 +68,15 @@ df_group_ccnum = pd.read_csv('./df_group_ccnum.csv')
 
 # Data {orientation="columns" scrolling="true"}
 
-## Row {.tabset}
-
 
 
 ```{python}
 #| title: Number of transactions per cc_num
-
+import itables
+from itables import show
 itables.show(df_group_ccnum)
 ```
 
-
-```{python}
-#| title: Transaction information per cc_num
-import itables.options as opt
-import itables.interactive
-def cc_num_filter(selected_cc_num):
-    return fraudTrain[fraudTrain['cc_num'] == selected_cc_num]
-opt.filters = {'cc_num': 'cc_num_filter'}
-itables.show(fraudTrain, options=opt)
-
-```
 
 # Graph
 
@@ -117,4 +105,18 @@ show(Ex1, showIndex = False)
 Ex1 = merged_df[(merged_df['throw_rate'] == 0.5) & (merged_df['train_size'] == 9009)]
 from itables import show
 show(plot_auc_curve(Ex1), showIndex = False)
+```
+
+
+```{python}
+#| title: Experiment2
+Ex2 = merged_df[(merged_df['test_frate'] >= 0.001) & (merged_df['test_frate'] <= 0.002) & (merged_df['train_size'] == 9009)]
+from itables import show
+show(Ex2, showIndex = False)
+```
+
+```{python}
+#| title: Experiment2 Visualization
+from itables import show
+show(plot_auc_curve(Ex2), showIndex = False)
 ```
