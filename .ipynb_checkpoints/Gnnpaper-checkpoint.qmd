@@ -30,8 +30,8 @@ with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
     fraudTrain = pickle.load(file)    
 
 merged_df = pd.read_csv('../GNNpaper/posts/results/240307_meged.csv')
-result_df = fraudTrain.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset_index()
-
+merged_df = merged_df[merged_df['model'] != 'WeightedEnsemble_L2']
+df_group_ccnum = pd.read_csv('./df_group_ccnum.csv')
 
 ```
 
@@ -45,7 +45,7 @@ result_df = fraudTrain.groupby("cc_num")["is_fraud"].agg(['count', 'sum']).reset
 ```{python}
 #| title: Number of transactions per cc_num
 
-itables.show(result_df, lengthMenu=[10, 50, 100, 300, 600])
+itables.show(df_group_ccnum)
 ```
 
 
@@ -59,6 +59,10 @@ opt.filters = {'cc_num': 'cc_num_filter'}
 itables.show(fraudTrain, options=opt)
 
 ```
+
+# Graph
+
+
 
 # Experiment
 
