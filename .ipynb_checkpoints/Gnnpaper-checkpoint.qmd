@@ -24,6 +24,8 @@ import networkx as nx
 import torch_geometric
 import pickle
 import itables
+import matplotlib.pyplot as plt
+from ipywidgets import interact, widgets
 
 def plot_auc_curve(filtered_df):
     # 모델 별 최대 AUC 값 구하기
@@ -54,6 +56,28 @@ def plot_auc_curve(filtered_df):
     fig.data[0].on_hover(show_info)
 
     fig.show()
+ 
+ 
+# 시간별 사기거래 image
+
+def plot_fraud_over_time(cc_num=4.503100e+18):
+    plt.style.use('ggplot')  
+    plt.figure(figsize=(10, 6))
+    data = df_fraud[df_fraud['cc_num'] == cc_num]
+    
+    fraud_count = (data['is_fraud'] == 1).sum()
+
+    plt.scatter(data[data['is_fraud'] == 1]['trans_date_trans_time'], data[data['is_fraud'] == 1]['is_fraud'], marker='.', color='red', label='Fraudulent Transactions')
+
+    plt.scatter(data[data['is_fraud'] == 0]['trans_date_trans_time'], data[data['is_fraud'] == 0]['is_fraud'], marker='.', color='blue', label='Legitimate Transactions')
+    
+    plt.title(f'Fraudulent Transactions Over Time \n cc_num: {cc_num}\n Fraudulent Count: {fraud_count}')
+    plt.xlabel('Transaction Date and Time')
+    plt.ylabel('Fraudulent Transactions')
+    plt.ylim(-0.1, 1.1)  
+    plt.legend(loc='center right') 
+    plt.show()
+
 
 # data
 with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
@@ -62,6 +86,13 @@ with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
 merged_df = pd.read_csv('../GNNpaper/posts/results/240307_meged.csv')
 merged_df = merged_df[merged_df['model'] != 'WeightedEnsemble_L2']
 df_group_ccnum = pd.read_csv('./df_group_ccnum.csv')
+
+# data_image
+df = fraudTrain[fraudTrain.is_fraud == 1]
+fraud1_cc_num = df['cc_num'].unique()
+df_fraud = fraudTrain[fraudTrain['cc_num'].isin(fraud1_cc_num)].reset_index()
+cc_num_value_sort = df_fraud.groupby("cc_num")["is_fraud"].agg(['sum']).reset_index().sort_values(by='sum',ascending=False)['cc_num'].tolist()
+
 
 ```
 
@@ -90,9 +121,9 @@ itables.show(fraudTrain, options=opt)
 
 ```
 
-# Graph
+# Image
 
-
+interact(plot_fraud_over_time, cc_num=widgets.Dropdown(options=[''] + cc_num_value_sort, value=4.503100e+18, description='cc_num:'))
 
 # Experiment
 
