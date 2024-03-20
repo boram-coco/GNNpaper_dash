@@ -60,27 +60,56 @@ def plot_auc_curve(filtered_df):
  
 # 시간별 사기거래 image
 
-def plot_fraud_over_time(cc_num=4.503100e+18):
-    plt.figure(figsize=(10, 6))
-    
+import plotly.graph_objects as go
+from ipywidgets import widgets, interact
+from IPython.display import display
+
+def plot_fraud_over_time(cc_num):
     # 사용자가 선택한 cc_num에 해당하는 데이터만 필터링
     data = df_fraud[df_fraud['cc_num'] == cc_num]
-    
+
     # is_fraud가 1인 값의 개수 계산
     fraud_count = (data['is_fraud'] == 1).sum()
 
-    # Fraudulent Transactions (is_fraud = 1)의 색상을 빨간색으로 지정
-    plt.scatter(data[data['is_fraud'] == 1]['trans_date_trans_time'], data[data['is_fraud'] == 1]['is_fraud'], marker='.', color='red', label='Fraudulent Transactions')
-    
-    # Legitimate Transactions (is_fraud = 0)의 색상을 파란색으로 지정
-    plt.scatter(data[data['is_fraud'] == 0]['trans_date_trans_time'], data[data['is_fraud'] == 0]['is_fraud'], marker='.', color='blue', label='Legitimate Transactions')
-    
-    plt.title(f'Fraudulent Transactions Over Time \n cc_num: {cc_num}\n Fraudulent Count: {fraud_count}')
-    plt.xlabel('Transaction Date and Time')
-    plt.ylabel('Fraudulent Transactions')
-    plt.ylim(-0.1, 1.1)  # y축 범위 설정
-    plt.legend(loc='center right')  # 범례를 오른쪽 가운데로 이동
-    plt.show()
+    # Plotly Figure 생성
+    fig = go.Figure()
+
+    # Fraudulent Transactions (is_fraud = 1)을 빨간색 점으로 추가
+    fig.add_trace(go.Scatter(x=data[data['is_fraud'] == 1]['trans_date_trans_time'], 
+                             y=data[data['is_fraud'] == 1]['is_fraud'], 
+                             mode='markers', 
+                             marker=dict(color='red'),
+                             name='Fraudulent Transactions'))
+
+    # Legitimate Transactions (is_fraud = 0)을 파란색 점으로 추가
+    fig.add_trace(go.Scatter(x=data[data['is_fraud'] == 0]['trans_date_trans_time'], 
+                             y=data[data['is_fraud'] == 0]['is_fraud'], 
+                             mode='markers', 
+                             marker=dict(color='blue'),
+                             name='Legitimate Transactions'))
+
+    # 그래프 제목과 축 레이블 설정
+    fig.update_layout(title=f'Fraudulent Transactions Over Time \n cc_num: {cc_num}\n Fraudulent Count: {fraud_count}',
+                      xaxis_title='Transaction Date and Time',
+                      yaxis_title='Fraudulent Transactions')
+
+    # 그래프 출력
+    fig.show()
+
+# 드롭다운 목록 위젯 생성
+cc_num_dropdown = widgets.Dropdown(
+    options=cc_num_value_sort,
+    value=cc_num_value_sort[0],  # 초기 선택 값 설정
+    description='cc_num:'
+)
+
+# 드롭다운 목록 출력
+display(cc_num_dropdown)
+
+# 사용자가 선택한 cc_num 값 가져오기 및 시각화
+interact(plot_fraud_over_time, cc_num=cc_num_dropdown)
+
+
 
 # data
 with open('../GNNpaper/posts/fraudTrain.pkl', 'rb') as file:
@@ -126,7 +155,9 @@ itables.show(fraudTrain, options=opt)
 ```
 
 # Image
-interact(plot_fraud_over_time, cc_num=widgets.Dropdown(options=[''] + cc_num_value_sort, value=4.503100e+18, description='cc_num:'))
+
+
+
 
 # Experiment
 
